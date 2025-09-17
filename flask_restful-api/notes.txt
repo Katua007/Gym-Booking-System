@@ -1,0 +1,39 @@
+Gym Appointment Booking System
+
+    MVP/User Stories.
+
+    A user can register as a trainee or trainer
+    A trainee can book a session with a trainer
+    A trainer can see all booked sessions
+
+    Classes.
+
+    Trainer => id, name, bio, specialization, phone_number, 
+    Trainee => id, name, email, phone_number, age
+    Session => id, day, activity, trainer_id, trainee_id
+
+    Relationships:
+        1 Session has how many trainers? 1 Trainer 
+            session1.trainer = "Shiv"
+        1 Trainer has how many sessions? Many sessions
+            One to Many Relationship between trainer and sessions
+            shiv.sessions = ['session1', session5, ]
+
+        1 session has how many trainees? 1 Trainee
+        1 trainee has how many sessions? Many sessions
+            One to Many Relationship between Trainee and Sessions
+
+        1 trainer has how many trainees? Many Trainees
+        1 trainee has how many trainers? Many Trainers
+            Many to Many Relationship between Trainee and Trainer
+
+            A Trainee has Many Trainers Through Sessions => 
+
+
+Create classes and map them to flask-sqlalchemy
+
+    
+
+
+
+    
