@@ -1,0 +1,23 @@
+# Virtual Environment
+.venv
+env/
+venv/
+.env
+!env/bin/activate
+!venv/bin/activate
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Flask/Development Server files
+instance/
+.flaskenv
+
+# Pipenv files
+Pipfile.lock
+
+# OS-specific files
+.DS_Store
+.vscode
