@@ -54,6 +54,9 @@ class User(db.Model):
         }
 
 class Register(Resource):
+    def options(self):
+        return {}, 200
+        
     def post(self):
         try:
             data = request.get_json()
@@ -78,6 +81,9 @@ class Register(Resource):
             return {'message': str(e)}, 500
 
 class Login(Resource):
+    def options(self):
+        return {}, 200
+        
     def post(self):
         data = request.get_json()
         user = User.query.filter_by(username=data['username']).first()
