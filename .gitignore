@@ -1,23 +1,11 @@
-# Virtual Environment
-.venv
-env/
-venv/
+node_modules/
+build/
+*.log
 .env
-!env/bin/activate
-!venv/bin/activate
-
-# Python Cache
+.env.local
+.DS_Store
 __pycache__/
 *.pyc
-*.pyo
-
-# Flask/Development Server files
-instance/
-.flaskenv
-
-# Pipenv files
-Pipfile.lock
-
-# OS-specific files
-.DS_Store
-.vscode
+*.db
+.vscode/
+.idea/

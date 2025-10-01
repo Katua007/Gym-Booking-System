@@ -16,7 +16,7 @@ function App() {
 
   useEffect(() => {
     if (token) {
-      fetch('/profile', {
+      fetch('/api/profile', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
