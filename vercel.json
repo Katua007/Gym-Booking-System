@@ -1,7 +1,4 @@
 {
-  "version": 2,
-  "buildCommand": "cd 'Gym Booking System' && npm install && npm run build",
-  "outputDirectory": "Gym Booking System/build",
   "functions": {
     "api/index.py": {
       "runtime": "python3.9"
@@ -11,10 +8,6 @@
     {
       "src": "/api/(.*)",
       "dest": "/api/index.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
     }
   ]
 }
