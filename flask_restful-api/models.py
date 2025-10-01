@@ -1,8 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy import MetaData
 from sqlalchemy.orm import validates
+from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 convention = {
     "ix": 'ix_%(column_0_label)s',
@@ -15,58 +16,63 @@ convention = {
 metadata = MetaData(naming_convention=convention)
 db = SQLAlchemy(metadata=metadata)
 
+class User(db.Model, SerializerMixin):
+    __tablename__ = 'users'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    phone = db.Column(db.String(15))
+    role = db.Column(db.String(20), default='member')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    is_active = db.Column(db.Boolean, default=True)
+    
+    serialize_rules = ('-password_hash',)
+    
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+    
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
 class Trainer(db.Model, SerializerMixin):
-    '''
-    Trainer class with attributes; id, name, bio, specialization, phone_number
-    '''
     __tablename__ = 'trainers'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String,unique=True)
-    bio = db.Column(db.String)
-    specialization = db.Column(db.String,nullable=True)
-    phone_number = db.Column(db.String)
+    name = db.Column(db.String(100), nullable=False)
+    bio = db.Column(db.Text)
+    specialization = db.Column(db.String(100))
+    phone_number = db.Column(db.String(15))
+    email = db.Column(db.String(120))
+    experience_years = db.Column(db.Integer, default=0)
+    hourly_rate = db.Column(db.Float, default=0.0)
+    is_available = db.Column(db.Boolean, default=True)
 
-    sessions = db.relationship('Session', back_populates='trainer')
-    trainees = association_proxy('sessions','trainee', creator=lambda thisTrainer: Session(trainer=thisTrainer))
-    __table_args__ = (db.CheckConstraint('len(phone_number)>10'),)
-    # manyrelatedobjects = association_proxy('hasmanythroughrelationship','relatedclass', creator= def(thisInstance): AssociationModel(thisRelationship=thisInstance))
-    # trainees = association_proxy('sessions','trainee',creator= lambda thisTrainer: Session(trainer = thisTrianer))
-
-    @validates('phone_number')
-    def validate_number(self,key,phone_number):
-        if len(phone_number)<10:
-            raise ValueError("phone number should have length greater than 10")
-        return phone_number
-         
-class Trainee(db.Model):
-    '''
-    Trainee class with attributes; id, name, email, phone_number, age
-    '''
-
-    __tablename__ = 'trainees'
+class GymClass(db.Model, SerializerMixin):
+    __tablename__ = 'gym_classes'
+    
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    email = db.Column(db.String)
-    phone_number = db.Column(db.String)
-    age = db.Column(db.Integer)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text)
+    trainer_id = db.Column(db.Integer, db.ForeignKey('trainers.id'), nullable=False)
+    start_time = db.Column(db.DateTime, nullable=False)
+    end_time = db.Column(db.DateTime, nullable=False)
+    max_capacity = db.Column(db.Integer, default=20)
+    current_bookings = db.Column(db.Integer, default=0)
+    price = db.Column(db.Float, default=0.0)
+    difficulty_level = db.Column(db.String(20), default='Beginner')
+    category = db.Column(db.String(50))
+    is_active = db.Column(db.Boolean, default=True)
 
-    sessions = db.relationship('Session', backref='trainee')
-    # manyrelatedobjects = association_proxy('hasmanythroughrelationship','relatedclass', creator= def(thisInstance): AssociationModel(thisRelationship=thisInstance))
-    trainers = association_proxy('sessions','trainer', creator=lambda thisTrainee: Session(trainee = thisTrainee))
-
-class Session(db.Model):
-    '''
-    Session class with attributes; id, day, activity, trainer_id, trainee_id
-    '''
-
-    __tablename__ = 'sessions'
+class Booking(db.Model, SerializerMixin):
+    __tablename__ = 'bookings'
+    
     id = db.Column(db.Integer, primary_key=True)
-    day = db.Column(db.String)
-    activity = db.Column(db.String)
-    trainer_id = db.Column(db.Integer, db.ForeignKey('trainers.id'))
-    trainee_id = db.Column(db.Integer, db.ForeignKey('trainees.id'))
-
-    trainer = db.relationship('Trainer', back_populates='sessions')
-
-
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    class_id = db.Column(db.Integer, db.ForeignKey('gym_classes.id'), nullable=False)
+    booking_date = db.Column(db.DateTime, default=datetime.utcnow)
+    status = db.Column(db.String(20), default='confirmed')
+    notes = db.Column(db.Text)

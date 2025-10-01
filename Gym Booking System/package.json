@@ -1,13 +1,14 @@
 {
-  "name": "my-react-app",
-  "version": "0.1.0",
+  "name": "gymbook-pro-frontend",
+  "version": "1.0.0",
   "private": true,
-  "proxy": "http://127.0.0.1:5000",
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "web-vitals": "^3.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
