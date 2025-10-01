@@ -8,7 +8,11 @@ from datetime import timedelta, datetime
 import os
 
 app = Flask(__name__)
-CORS(app, origins=["*"])
+CORS(app, 
+     origins=["*"], 
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+     allow_headers=["Content-Type", "Authorization"],
+     supports_credentials=True)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///gym.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -86,6 +90,13 @@ class Login(Resource):
             }, 200
         
         return {'message': 'Invalid credentials'}, 401
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return response
 
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
