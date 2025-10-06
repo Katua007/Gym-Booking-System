@@ -16,14 +16,14 @@ function Dashboard({ user }) {
         const token = localStorage.getItem('token');
         
         // Fetch user's bookings
-        const bookingsResponse = await fetch('/bookings', {
+        const bookingsResponse = await fetch('https://gym-booking-system-server.vercel.app/bookings', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
         });
         
         // Fetch available classes
-        const classesResponse = await fetch('/classes');
+        const classesResponse = await fetch('https://gym-booking-system-server.vercel.app/classes');
         
         if (bookingsResponse.ok && classesResponse.ok) {
           const bookings = await bookingsResponse.json();
