@@ -73,8 +73,8 @@ function Dashboard({ user }) {
   return (
     <div className="dashboard fade-in">
       <div className="dashboard-header">
-        <h1 style={{fontSize: '3.5em', background: 'linear-gradient(45deg, #667eea, #764ba2)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', textShadow: '2px 2px 4px rgba(0,0,0,0.3)', marginBottom: '20px', fontWeight: '800'}}>Welcome back, {user?.first_name}! 👋</h1>
-        <p style={{fontSize: '1.3em', color: '#555', fontWeight: '600'}}>Ready for your next workout?</p>
+        <h1 style={{fontSize: 'clamp(1.8em, 5vw, 3.5em)', background: 'linear-gradient(45deg, #667eea, #764ba2)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', textShadow: '2px 2px 4px rgba(0,0,0,0.3)', marginBottom: '20px', fontWeight: '800'}}>Welcome back, {user?.first_name}! 👋</h1>
+        <p style={{fontSize: 'clamp(1em, 3vw, 1.3em)', color: '#555', fontWeight: '600'}}>Ready for your next workout?</p>
       </div>
 
       <div className="stats-grid grid grid-4">

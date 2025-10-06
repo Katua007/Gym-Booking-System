@@ -256,12 +256,12 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
   .main-content {
-    padding: 15px;
+    padding: 10px;
   }
   
   .card {
-    padding: 20px;
-    margin: 15px 0;
+    padding: 15px;
+    margin: 10px 0;
   }
   
   .class-header {
@@ -277,6 +277,47 @@ body {
   .btn {
     width: 100%;
     margin: 5px 0;
+    padding: 10px;
+    font-size: 0.9em;
+  }
+  
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 8px;
+  }
+  
+  .card {
+    padding: 12px;
+    margin: 8px 0;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .stat-card {
+    padding: 12px;
+  }
+  
+  .class-title {
+    font-size: 1.2em;
+  }
+  
+  .trainer-avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 1.2em;
   }
 }
 
