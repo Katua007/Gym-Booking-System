@@ -12,7 +12,7 @@ function Trainers({ token }) {
 
   const fetchTrainers = async () => {
     try {
-      const response = await fetch('/trainers');
+      const response = await fetch('https://gym-booking-system-server.vercel.app/trainers');
       if (response.ok) {
         const data = await response.json();
         setTrainers(data);

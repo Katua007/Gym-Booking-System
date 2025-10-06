@@ -21,7 +21,7 @@ function Classes({ token }) {
 
   const fetchClasses = async () => {
     try {
-      const response = await fetch('/classes');
+      const response = await fetch('https://gym-booking-system-server.vercel.app/classes');
       if (response.ok) {
         const data = await response.json();
         setClasses(data);
