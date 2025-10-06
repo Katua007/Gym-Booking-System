@@ -1,15 +1,15 @@
+from http.server import BaseHTTPRequestHandler
 import json
 
-def handler(request):
-    if request.method == 'OPTIONS':
-        headers = {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        }
-        return ('', 204, headers)
-    
-    if request.method == 'GET':
+class handler(BaseHTTPRequestHandler):
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+        self.end_headers()
+
+    def do_GET(self):
         trainers = [
             {'id': 1, 'name': 'Mike Johnson', 'specialization': 'Strength Training', 'experience_years': 8, 'hourly_rate': 75.0, 'bio': 'Certified personal trainer with 8 years of experience in strength training and bodybuilding.', 'phone_number': '1234567890', 'email': 'mike@gym.com', 'is_available': True},
             {'id': 2, 'name': 'Alex Rodriguez', 'specialization': 'Strength Training', 'experience_years': 5, 'hourly_rate': 65.0, 'bio': 'Former competitive powerlifter specializing in compound movements.', 'phone_number': '2345678901', 'email': 'alex@gym.com', 'is_available': True},
@@ -25,11 +25,8 @@ def handler(request):
             {'id': 12, 'name': 'Carlos Mendez', 'specialization': 'HIIT', 'experience_years': 8, 'hourly_rate': 80.0, 'bio': 'Elite HIIT trainer specializing in metabolic conditioning and fat loss.', 'phone_number': '2233445566', 'email': 'carlos@gym.com', 'is_available': True}
         ]
         
-        headers = {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json',
-        }
-        
-        return (json.dumps(trainers), 200, headers)
-    
-    return ('Method not allowed', 405)
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Content-Type', 'application/json')
+        self.end_headers()
+        self.wfile.write(json.dumps(trainers).encode())
