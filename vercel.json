@@ -1,18 +1,10 @@
 {
-  "builds": [
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.py"
+  "functions": {
+    "api/register.py": {
+      "runtime": "python3.9"
     },
-    {
-      "src": "/(.*)",
-      "dest": "/api/index.py"
+    "api/login.py": {
+      "runtime": "python3.9"
     }
-  ]
+  }
 }
